@@ -1,4 +1,4 @@
-import { Avatar } from "@mui/material";
+import { Avatar, Button } from "@mui/material";
 import "./Sidebar.css";
 import { useState } from "react";
 
@@ -16,6 +16,10 @@ const Sidebar = () => {
   const [activeMenu, setActiveMenu] = useState("Home");
   const handleMenuChange = (item) => {
     setActiveMenu(item.name);
+  };
+
+  const handleLogout = () => {
+    console.log("Logout clicked");
   };
 
   return (
@@ -41,6 +45,18 @@ const Sidebar = () => {
               {item.name}
             </p>
           ))}
+
+        <Button
+          onClick={() => handleLogout()}
+          sx={{
+            padding: ".7rem",
+            borderRadius: "2rem",
+            backgroundColor: "violet",
+          }}
+          fullWidth
+        >
+          logout
+        </Button>
       </div>
     </div>
   );

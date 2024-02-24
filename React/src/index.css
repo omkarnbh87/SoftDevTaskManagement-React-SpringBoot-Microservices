@@ -13,6 +13,18 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
+.card {
+  background-color: #0c071b;
+  box-shadow: rgba(215, 106, 255, 0.507) 0px 0px 20px;
+  padding: 1rem;
+  border-radius: 5px;
+}
+.techStack {
+  color: #c24dd0;
+  border: 2px solid #c24dd0;
+  padding: 0.5rem 2rem;
+}
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
