@@ -1,10 +1,13 @@
 import "./App.css";
+import Home from "./Page/Home/Home";
+import Navbar from "./Page/Navbar/Navbar";
 
 function App() {
   return (
     <>
       <div>
-        <h1>Hello React</h1>
+        <Navbar />
+        <Home />
       </div>
     </>
   );
