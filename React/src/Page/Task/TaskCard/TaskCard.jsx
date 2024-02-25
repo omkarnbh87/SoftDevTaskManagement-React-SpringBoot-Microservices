@@ -1,10 +1,40 @@
 import MoreVertIcon from "@mui/icons-material/MoreVert";
-import { IconButton } from "@mui/material";
+import { IconButton, Menu, MenuItem } from "@mui/material";
+import { useState } from "react";
+import UserList from "../UserList";
+
+const role = "ADMIN";
 
 const TaskCard = () => {
+  const [anchorEl, setAnchorEl] = useState(null);
+  const openMenu = Boolean(anchorEl);
+  const handleMenuClick = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
+  const handleMenuClose = () => {
+    setAnchorEl(null);
+  };
+
+  const [openUserList, setOpenUserList] = useState(false);
+
+  const handleCloseUserList = () => {
+    setOpenUserList(false);
+  };
+
+  const handleOpenUserList = () => {
+    setOpenUserList(true);
+    handleMenuClose();
+  };
+
+  const handleOpenSubmissionList = () => {};
+
+  const handleOpenUpdateTaskModel = () => {};
+
+  const handleDeleteTask = () => {};
+
   return (
     <div>
-      <div className="card lg: flex justify-center">
+      <div className="card lg:flex justify-between">
         <div className="lg:flex gap-5 space-y-2 items-center w-[90%] lg:w-[70%]">
           <div className="">
             <img
@@ -29,11 +59,40 @@ const TaskCard = () => {
           </div>
         </div>
         <div>
-          <IconButton>
-            <MoreVertIcon></MoreVertIcon>
+          <IconButton
+            id="basic-button"
+            aria-controls={openMenu ? "basic-menu" : undefined}
+            aria-haspopup="true"
+            aria-expanded={open ? "true" : undefined}
+            onClick={handleMenuClick}
+          >
+            <MoreVertIcon className="text-white"></MoreVertIcon>
           </IconButton>
+          <Menu
+            id="basic-menu"
+            anchorEl={anchorEl}
+            open={openMenu}
+            onClose={handleMenuClose}
+            MenuListProps={{
+              "aria-labelledby": "basic-button",
+            }}
+          >
+            {role === "ADMIN" ? (
+              <>
+                <MenuItem onClick={handleOpenUserList}>Assigned User</MenuItem>
+                <MenuItem onClick={handleOpenSubmissionList}>
+                  See Submission
+                </MenuItem>
+                <MenuItem onClick={handleOpenUpdateTaskModel}>Edit</MenuItem>
+                <MenuItem onClick={handleDeleteTask}>Delete</MenuItem>
+              </>
+            ) : (
+              <></>
+            )}
+          </Menu>
         </div>
       </div>
+      <UserList open={openUserList} handleClose={handleCloseUserList} />
     </div>
   );
 };
