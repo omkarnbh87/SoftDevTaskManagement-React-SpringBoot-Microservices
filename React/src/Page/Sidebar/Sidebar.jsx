@@ -47,6 +47,7 @@ const Sidebar = () => {
           ))}
 
         <Button
+          className="logoutButton"
           onClick={() => handleLogout()}
           sx={{
             padding: ".7rem",

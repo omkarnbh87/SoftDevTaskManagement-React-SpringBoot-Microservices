@@ -2,6 +2,8 @@ import MoreVertIcon from "@mui/icons-material/MoreVert";
 import { IconButton, Menu, MenuItem } from "@mui/material";
 import { useState } from "react";
 import UserList from "../UserList";
+import SubmissionList from "./SubmissionList";
+import EditTaskCard from "./EditTaskCard";
 
 const role = "ADMIN";
 
@@ -26,11 +28,31 @@ const TaskCard = () => {
     handleMenuClose();
   };
 
-  const handleOpenSubmissionList = () => {};
+  const [openSubmissionList, setOpenSubmissionList] = useState(false);
 
-  const handleOpenUpdateTaskModel = () => {};
+  const handleCloseSubmissionList = () => {
+    setOpenSubmissionList(false);
+  };
 
-  const handleDeleteTask = () => {};
+  const handleOpenSubmissionList = () => {
+    setOpenSubmissionList(true);
+    handleMenuClose();
+  };
+
+  const [openUpdateTask, setOpenUpdateTask] = useState(false);
+
+  const handleCloseUpdateTask = () => {
+    setOpenUpdateTask(false);
+  };
+
+  const handleOpenUpdateTaskModel = () => {
+    setOpenUpdateTask(true);
+    handleMenuClose();
+  };
+
+  const handleDeleteTask = () => {
+    handleMenuClose();
+  };
 
   return (
     <div>
@@ -93,6 +115,11 @@ const TaskCard = () => {
         </div>
       </div>
       <UserList open={openUserList} handleClose={handleCloseUserList} />
+      <SubmissionList
+        open={openSubmissionList}
+        handleClose={handleCloseSubmissionList}
+      ></SubmissionList>
+      <EditTaskCard open={openUpdateTask} handleClose={handleCloseUpdateTask} />
     </div>
   );
 };
