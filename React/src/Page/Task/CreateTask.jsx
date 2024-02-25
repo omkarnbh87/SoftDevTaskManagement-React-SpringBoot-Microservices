@@ -1,6 +1,8 @@
 /* eslint-disable react/prop-types */
 import Box from "@mui/material/Box";
-
+import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
+import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
+import { DateTimePicker } from "@mui/x-date-pickers/DateTimePicker";
 import Modal from "@mui/material/Modal";
 import { Autocomplete, Grid, TextField } from "@mui/material";
 import { useState } from "react";
@@ -46,6 +48,45 @@ export default function CreateTask({ handleClose, open }) {
     "Node js",
     "Python",
   ];
+
+  const handleDeadlineChange = (date) => {
+    setFormData({
+      ...formData,
+      deadline: date,
+    });
+  };
+  const formatDate = (input) => {
+    let {
+      $y: year,
+      $M: month,
+      $D: day,
+      $H: hours,
+      $m: minutes,
+      $s: seconds,
+      $ms: miliseconds,
+    } = input;
+
+    const date = new Date(
+      year,
+      month,
+      day,
+      hours,
+      minutes,
+      seconds,
+      miliseconds
+    );
+    const formatedDate = date.toISOString();
+    return formatedDate;
+  };
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    const { deadline } = formData;
+    formData.deadline = formatDate(deadline);
+    formData.tags = selectedTags;
+    console.log("Formdata: ", formData);
+    console.log("deadline: ", formData.deadline);
+    handleClose();
+  };
   return (
     <div>
       <Modal
@@ -55,7 +96,7 @@ export default function CreateTask({ handleClose, open }) {
         aria-describedby="modal-modal-description"
       >
         <Box sx={style}>
-          <form>
+          <form onSubmit={handleSubmit}>
             <Grid container spacing={2} alignItems="center">
               <Grid item xs={12}>
                 <TextField
@@ -98,6 +139,24 @@ export default function CreateTask({ handleClose, open }) {
                     <TextField label="Tags" fullWidth {...param} />
                   )}
                 />
+              </Grid>
+              <Grid item xs={12}>
+                <LocalizationProvider dateAdapter={AdapterDayjs}>
+                  <DateTimePicker
+                    className="w-full"
+                    onChange={handleDeadlineChange}
+                    label="Deadline"
+                    renderInput={(params) => <TextField {...params} />}
+                  />
+                </LocalizationProvider>
+              </Grid>
+              <Grid item xs={12}>
+                <button
+                  className="customButton w-full py-2.5 rounded-full"
+                  type="submit"
+                >
+                  Create
+                </button>
               </Grid>
             </Grid>
           </form>

@@ -1,4 +1,4 @@
-import { Avatar, Button } from "@mui/material";
+import { Avatar } from "@mui/material";
 import "./Sidebar.css";
 import { useState } from "react";
 import CreateTask from "../Task/CreateTask";
@@ -61,14 +61,12 @@ const Sidebar = () => {
                 {item.name}
               </p>
             ))}
-          <Button
-            sx={{ padding: ".7rem", borderRadius: "2rem" }}
-            fullWidth
-            className="logoutButton "
+          <button
+            className="logoutButton w-full py-2.5 rounded-full"
             onClick={() => handleLogout()}
           >
             Logout
-          </Button>
+          </button>
         </div>
       </div>
       <CreateTask open={openCreateTask} handleClose={handleCloseCreateTask} />
