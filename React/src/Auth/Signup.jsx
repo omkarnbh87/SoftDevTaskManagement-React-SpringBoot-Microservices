@@ -25,8 +25,8 @@ const Signup = ({ togglePanel }) => {
   };
   return (
     <div>
-      <h1 className="text-lg font-bold text-center pb-8 ">Register</h1>
-      <form className="space-y-3" onSubmit={handleSubmit}>
+      <h1 className="text-lg font-bold text-center pb-4 ">Register</h1>
+      <form className="space-y-0.5" onSubmit={handleSubmit}>
         <TextField
           fullWidth
           label="Full Name"
@@ -70,7 +70,7 @@ const Signup = ({ togglePanel }) => {
         </FormControl>
         <div>
           <button
-            className="bg-green-600 w-full mb-5  py-2.5 rounded-full"
+            className="bg-green-600 w-full mt-2  py-2.5 rounded-full"
             type="submit"
           >
             Register
@@ -80,7 +80,7 @@ const Signup = ({ togglePanel }) => {
       <div>
         <span>Already have an account?</span>
         <button
-          className="customButton mt-1  px-4 py-2.5 rounded-full w-full"
+          className="   px-4 py-2.5 underline text-yellow-400 "
           onClick={togglePanel}
         >
           Signin
