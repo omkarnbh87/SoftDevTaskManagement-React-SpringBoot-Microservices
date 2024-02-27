@@ -8,7 +8,10 @@ import { Autocomplete, Grid, TextField } from "@mui/material";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchTasksById, updateTask } from "../../../ReduxToolkit/TaskSlice";
+<<<<<<< HEAD
 import { useLocation } from "react-router-dom";
+=======
+>>>>>>> 31a43ff7d9ac006544a242c8119f3fdd3be69944
 
 const style = {
   position: "absolute",
@@ -23,9 +26,12 @@ const style = {
 };
 
 export default function EditTaskCard({ item, handleClose, open }) {
+<<<<<<< HEAD
   const location = useLocation();
   const queryParams = new URLSearchParams(location.search);
   const taskId = queryParams.get("taskId");
+=======
+>>>>>>> 31a43ff7d9ac006544a242c8119f3fdd3be69944
   const dispatch = useDispatch();
   const { task } = useSelector((store) => store);
   const [formData, setFormData] = useState({
@@ -98,8 +104,14 @@ export default function EditTaskCard({ item, handleClose, open }) {
   };
 
   useEffect(() => {
+<<<<<<< HEAD
     dispatch(fetchTasksById(taskId));
   }, [taskId]);
+=======
+    console.log("hello");
+    dispatch(fetchTasksById(item.id));
+  }, [item.id]);
+>>>>>>> 31a43ff7d9ac006544a242c8119f3fdd3be69944
 
   useEffect(() => {
     if (task.taskDetails) setFormData(task.taskDetails);

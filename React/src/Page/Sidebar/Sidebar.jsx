@@ -4,8 +4,13 @@ import { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import CreateTask from "../Task/CreateTask";
 import "./Sidebar.css";
+<<<<<<< HEAD
 import { useDispatch, useSelector } from "react-redux";
 import { getUserProfile, logout } from "../../ReduxToolkit/AuthSlice";
+=======
+import { useDispatch } from "react-redux";
+import { logout } from "../../ReduxToolkit/AuthSlice";
+>>>>>>> 31a43ff7d9ac006544a242c8119f3fdd3be69944
 
 const menu = [
   { name: "Home", value: "Home", role: ["ADMIN", "CUSTOMER"] },

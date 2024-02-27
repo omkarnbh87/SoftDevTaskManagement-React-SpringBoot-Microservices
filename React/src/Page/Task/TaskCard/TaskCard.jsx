@@ -5,6 +5,7 @@ import { useState } from "react";
 import UserList from "../UserList";
 import SubmissionList from "./SubmissionList";
 import EditTaskCard from "./EditTaskCard";
+<<<<<<< HEAD
 import { useDispatch, useSelector } from "react-redux";
 import { deleteTask } from "../../../ReduxToolkit/TaskSlice";
 import { useLocation, useNavigate } from "react-router-dom";
@@ -12,6 +13,15 @@ import SubmitTaskFormModel from "./SubmitTaskFormModel";
 
 const TaskCard = ({ item }) => {
   const { auth } = useSelector((store) => store);
+=======
+import { useDispatch } from "react-redux";
+import { deleteTask } from "../../../ReduxToolkit/TaskSlice";
+import { useLocation, useNavigate } from "react-router-dom";
+
+const role = "ADMIN";
+
+const TaskCard = ({ item }) => {
+>>>>>>> 31a43ff7d9ac006544a242c8119f3fdd3be69944
   const location = useLocation();
   const navigate = useNavigate();
   const dispath = useDispatch();
@@ -85,11 +95,18 @@ const TaskCard = ({ item }) => {
   };
 
   const handleOpenUpdateTaskModel = () => {
+    // const updatedParams = new URLSearchParams(location.search);
+
     setOpenUpdateTask(true);
+<<<<<<< HEAD
     const updatedParams = new URLSearchParams(location.search);
 
     updatedParams.set("taskId", item.id);
     navigate(`${location.pathname}?${updatedParams.toString()}`);
+=======
+    // updatedParams.set("taskId", item.id);
+    // navigate(`${location.pathname}?${updatedParams.toString()}`);
+>>>>>>> 31a43ff7d9ac006544a242c8119f3fdd3be69944
     handleMenuClose();
   };
 
@@ -163,10 +180,17 @@ const TaskCard = ({ item }) => {
         open={openSubmissionList}
         handleClose={handleCloseSubmissionList}
       ></SubmissionList>
+<<<<<<< HEAD
       <EditTaskCard open={openUpdateTask} handleClose={handleCloseUpdateTask} />
       <SubmitTaskFormModel
         open={openSubmitFormMoel}
         handleClose={handleCloseSubmitFormModel}
+=======
+      <EditTaskCard
+        item={item}
+        open={openUpdateTask}
+        handleClose={handleCloseUpdateTask}
+>>>>>>> 31a43ff7d9ac006544a242c8119f3fdd3be69944
       />
     </div>
   );
