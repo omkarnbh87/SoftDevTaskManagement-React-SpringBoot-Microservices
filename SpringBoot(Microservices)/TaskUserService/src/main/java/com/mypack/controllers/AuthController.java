@@ -16,9 +16,11 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.mypack.entities.Role;
 import com.mypack.entities.User;
 import com.mypack.models.JwtRequest;
 import com.mypack.models.JwtResponse;
+import com.mypack.models.UserDto;
 import com.mypack.security.JwtHelper;
 import com.mypack.services.UserService;
 
@@ -68,8 +70,16 @@ public class AuthController {
 	}
 
 	@PostMapping("/signup")
-	public User createUser(@RequestBody User user) {
+	public User createUser(@RequestBody UserDto userDto) {
 
+		User user = new User();
+		user.setEmail(userDto.getEmail());
+		user.setPassword(userDto.getPassword());
+		user.setFullName(userDto.getFullName());
+		if(userDto.getRole().equals("ADMIN"))
+			user.setRole(Role.ADMIN);
+		else
+			user.setRole(Role.CUSTOMER);
 		return userService.createUser(user);
 	}
 }

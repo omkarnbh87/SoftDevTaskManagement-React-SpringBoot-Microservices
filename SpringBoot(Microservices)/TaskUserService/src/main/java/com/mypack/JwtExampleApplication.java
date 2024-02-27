@@ -19,9 +19,6 @@ public class JwtExampleApplication implements CommandLineRunner {
 	public static void main(String[] args) {
 		SpringApplication.run(JwtExampleApplication.class, args);
 	}
-	
-	
-	
 
 	@Override
 	public void run(String... args) throws Exception {
@@ -31,7 +28,7 @@ public class JwtExampleApplication implements CommandLineRunner {
 			User user = new User();
 			user.setEmail("admin@gmail.com");
 			user.setPassword(new BCryptPasswordEncoder().encode("admin"));
-			user.setFullName("admin");
+			user.setFullName("Admin");
 			user.setRole(Role.ADMIN);
 			userRepository.save(user);
 		}

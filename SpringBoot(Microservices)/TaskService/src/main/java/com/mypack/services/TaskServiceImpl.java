@@ -85,7 +85,7 @@ public class TaskServiceImpl implements TaskService {
 		// TODO Auto-generated method stub
 		Task task = getTaskById(taskId);
 		task.setAssignedUserId(userId);
-		task.setStatus(TaskStatus.DONE);
+		task.setStatus(TaskStatus.ASSIGNED);
 		return taskRepository.save(task);
 	}
 

@@ -21,7 +21,7 @@ import com.mypack.services.TaskService;
 import com.mypack.services.UserService;
 
 @RestController
-@RequestMapping("/api/submission")
+@RequestMapping("/api/submissions")
 public class SubmissionController {
 
 	@Autowired
@@ -61,6 +61,7 @@ public class SubmissionController {
 	@GetMapping("task/{taskId}")
 	public ResponseEntity<List<Submission>> getAllSubmission(@PathVariable Long taskId,
 			@RequestHeader("Authorization") String jwt) throws Exception {
+		System.out.println("taskId"+taskId);
 		UserDto user = userService.getUserProfile(jwt);
 		List<Submission> submissions = submissionService.getTaskSubmissionByTaskId(taskId);
 		return new ResponseEntity<>(submissions, HttpStatus.OK);

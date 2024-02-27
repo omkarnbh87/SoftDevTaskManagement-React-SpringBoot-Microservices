@@ -20,7 +20,7 @@ spring:
           uri:
             lb://SUBMISSION-SERVICE  
           predicates:
-           - Path=/api/submission/**,/submission/**
+           - Path=/api/submissions/**,/submissions/**
        default-filters:
         - DedupeResponseHeader=Access-Control-Allow-Origin
         - DedupeResponseHeader=Access-Control-Allow-Methods

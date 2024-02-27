@@ -29,7 +29,7 @@ public class UserService {
 	public User createUser(User user) {
 
 		user.setPassword(encoder.encode(user.getPassword()));
-		user.setRole(Role.CUSTOMER);
+		
 		return repository.save(user);
 	}
 

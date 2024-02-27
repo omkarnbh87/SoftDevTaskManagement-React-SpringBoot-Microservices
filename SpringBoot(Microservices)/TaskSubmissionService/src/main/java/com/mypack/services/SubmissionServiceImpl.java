@@ -71,7 +71,7 @@ public class SubmissionServiceImpl implements SubmissionService {
 		// TODO Auto-generated method stub
 		Submission submission = getTaskSubmissionById(id);
 		submission.setStatus(status);
-		if(status.equals("ACCEPT")) {
+		if(status.equals("ACCEPTED")) {
 			
 			taskService.completeTask(submission.getTaskId());
 
