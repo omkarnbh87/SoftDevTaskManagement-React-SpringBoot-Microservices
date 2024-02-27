@@ -7,6 +7,8 @@ import {
   TextField,
 } from "@mui/material";
 import { useState } from "react";
+import { useDispatch } from "react-redux";
+import { register } from "../ReduxToolkit/AuthSlice";
 
 const Signup = ({ togglePanel }) => {
   const [formData, setFormData] = useState({
@@ -15,14 +17,17 @@ const Signup = ({ togglePanel }) => {
     password: "",
     role: "",
   });
+  const dispatch = useDispatch();
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
   };
   const handleSubmit = (e) => {
     e.preventDefault();
+    dispatch(register(formData));
     console.log("login form: ", formData);
   };
+
   return (
     <div>
       <h1 className="text-lg font-bold text-center pb-4 ">Register</h1>
@@ -32,6 +37,7 @@ const Signup = ({ togglePanel }) => {
           label="Full Name"
           name="fullName"
           type="text"
+          required
           value={formData.fullName}
           onChange={handleChange}
           placeholder="Enter your full name"
@@ -41,6 +47,7 @@ const Signup = ({ togglePanel }) => {
           label="Email"
           name="email"
           type="email"
+          required
           value={formData.email}
           onChange={handleChange}
           placeholder="Enter your email"
@@ -50,6 +57,7 @@ const Signup = ({ togglePanel }) => {
           label="Password"
           name="password"
           type="password"
+          required
           value={formData.password}
           onChange={handleChange}
           placeholder="Enter password"
@@ -64,7 +72,7 @@ const Signup = ({ togglePanel }) => {
             name="role"
             onChange={handleChange}
           >
-            <MenuItem value={"USER"}>USER</MenuItem>
+            <MenuItem value={"CUSTOMER"}>CUSTOMER</MenuItem>
             <MenuItem value={"ADMIN"}>ADMIN</MenuItem>
           </Select>
         </FormControl>

@@ -1,10 +1,15 @@
+/* eslint-disable react/prop-types */
 import OpenInNewIcon from "@mui/icons-material/OpenInNew";
 import CloseIcon from "@mui/icons-material/Close";
 import CheckIcon from "@mui/icons-material/Check";
 import { Button, IconButton } from "@mui/material";
-const SubmissionCard = () => {
-  const flag = true;
+import { useDispatch } from "react-redux";
+import { acceptDeclineSubmission } from "../../../ReduxToolkit/SubmissionSlice";
+import { Link } from "react-router-dom";
+const SubmissionCard = ({ item }) => {
+  const dispatch = useDispatch();
   const handleAcceptDecline = (status) => {
+    dispatch(acceptDeclineSubmission({ id: item.id, status }));
     console.log(status);
   };
   return (
@@ -14,16 +19,16 @@ const SubmissionCard = () => {
           <span>Git hub :</span>
           <div className="flex items-center gap-2 text-[#c24dd0]">
             <OpenInNewIcon />
-            <a href="/"> Go To Link</a>
+            <a href={item.githubLink}>Go to Link</a>
           </div>
         </div>
         <div className="flex items-center gap-2 text-xs ">
           <p>Submission Time : </p>
-          <p className="text-gray-400">2024-01-18T22:15:39.64546</p>
+          <p className="text-gray-400">{item.submissionTime}</p>
         </div>
       </div>
       <div>
-        {flag ? (
+        {item.status === "PENDING" ? (
           <div className="flex gap-5">
             <div className="text-green-500">
               <IconButton
@@ -46,9 +51,9 @@ const SubmissionCard = () => {
           <Button
             size="small"
             variant="outlined"
-            color={true ? "success" : "error"}
+            color={item.status === "ACCEPTED" ? "success" : "error"}
           >
-            accepted
+            {item.status}
           </Button>
         )}
       </div>

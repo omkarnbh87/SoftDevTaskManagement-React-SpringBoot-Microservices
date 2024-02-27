@@ -57,7 +57,6 @@ export const getUserList = createAsyncThunk("home/user", async (jwt) => {
   setAuthHeader(jwt, api);
   try {
     const { data } = await api.get(`/home/user`);
-    localStorage.setItem("jwt", data.jwt);
 
     console.log("user list success ", data);
     return data;

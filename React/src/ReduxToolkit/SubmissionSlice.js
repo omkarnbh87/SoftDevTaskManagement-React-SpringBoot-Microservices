@@ -4,14 +4,14 @@ import { api, setAuthHeader } from "../api/api";
 export const submitTask = createAsyncThunk(
   "submissions/submitTask",
   async ({ taskId, githubLink }) => {
-    setAuthHeader(localStorage.getItem("jwt", api));
+    setAuthHeader(localStorage.getItem("jwt"), api);
 
     try {
       const { data } = await api.post(
         `/api/submissions?task_id=${taskId}&github_link=${githubLink}`,
         {}
       );
-      console.log("submit task ", data);
+      console.log("submited task ", data);
       return data;
     } catch (error) {
       console.log("Error ", error);
@@ -23,10 +23,10 @@ export const submitTask = createAsyncThunk(
 export const fetchAllSubmissions = createAsyncThunk(
   "submissions/fetchAllSubmissions",
   async () => {
-    setAuthHeader(localStorage.getItem("jwt", api));
+    setAuthHeader(localStorage.getItem("jwt"), api);
 
     try {
-      const { data } = await api.get(`/api/submissions`, {});
+      const { data } = await api.get(`/api/submissions`);
       console.log("submit task ", data);
       return data;
     } catch (error) {
@@ -39,11 +39,11 @@ export const fetchAllSubmissions = createAsyncThunk(
 export const fetchAllSubmissionsByTaskId = createAsyncThunk(
   "submissions/fetchAllSubmissionsByTaskId",
   async (taskId) => {
-    setAuthHeader(localStorage.getItem("jwt", api));
+    setAuthHeader(localStorage.getItem("jwt"), api);
 
     try {
-      const { data } = await api.get(`/api/submissions/task/${taskId}`, {});
-      console.log("submit task ", data);
+      const { data } = await api.get(`/api/submissions/task/${taskId}`);
+      console.log("submited task ", data);
       return data;
     } catch (error) {
       console.log("Error ", error);
@@ -55,7 +55,7 @@ export const fetchAllSubmissionsByTaskId = createAsyncThunk(
 export const acceptDeclineSubmission = createAsyncThunk(
   "submissions/acceptDeclineSubmission",
   async ({ id, status }) => {
-    setAuthHeader(localStorage.getItem("jwt", api));
+    setAuthHeader(localStorage.getItem("jwt"), api);
 
     try {
       const { data } = await api.put(
@@ -102,7 +102,7 @@ const submissionSlice = createSlice({
       })
       .addCase(fetchAllSubmissionsByTaskId.fulfilled, (state, action) => {
         state.status = "succeded";
-        state.submissions.push(action.payload);
+        state.submissions = action.payload;
       })
       .addCase(fetchAllSubmissionsByTaskId.rejected, (state, action) => {
         state.status = "failed";
@@ -117,4 +117,4 @@ const submissionSlice = createSlice({
   },
 });
 
-export default submissionSlice;
+export default submissionSlice.reducer;

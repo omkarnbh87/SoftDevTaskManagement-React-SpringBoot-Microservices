@@ -28,6 +28,7 @@ const Signin = ({ togglePanel }) => {
           label="Email"
           name="email"
           type="email"
+          required
           value={formData.email}
           onChange={handleChange}
           placeholder="Enter your email"
@@ -37,6 +38,7 @@ const Signin = ({ togglePanel }) => {
           label="Password"
           name="password"
           type="password"
+          required
           value={formData.password}
           onChange={handleChange}
           placeholder="Enter password"

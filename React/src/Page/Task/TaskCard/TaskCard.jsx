@@ -5,13 +5,13 @@ import { useState } from "react";
 import UserList from "../UserList";
 import SubmissionList from "./SubmissionList";
 import EditTaskCard from "./EditTaskCard";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { deleteTask } from "../../../ReduxToolkit/TaskSlice";
 import { useLocation, useNavigate } from "react-router-dom";
-
-const role = "ADMIN";
+import SubmitTaskFormModel from "./SubmitTaskFormModel";
 
 const TaskCard = ({ item }) => {
+  const { auth } = useSelector((store) => store);
   const location = useLocation();
   const navigate = useNavigate();
   const dispath = useDispatch();
@@ -21,6 +21,7 @@ const TaskCard = ({ item }) => {
     setAnchorEl(event.currentTarget);
   };
   const handleMenuClose = () => {
+    // navigate("");
     setAnchorEl(null);
   };
 
@@ -31,7 +32,24 @@ const TaskCard = ({ item }) => {
   };
 
   const handleOpenUserList = () => {
+    const updatedParams = new URLSearchParams(location.search);
+    updatedParams.set("taskId", item.id);
+    navigate(`${location.pathname}?${updatedParams.toString()}`);
     setOpenUserList(true);
+    handleMenuClose();
+  };
+
+  const [openSubmitFormMoel, setOpenSubmitFormModel] = useState(false);
+
+  const handleCloseSubmitFormModel = () => {
+    setOpenSubmitFormModel(false);
+  };
+
+  const handleOpenSubmitFormModel = () => {
+    const updatedParams = new URLSearchParams(location.search);
+    updatedParams.set("taskId", item.id);
+    navigate(`${location.pathname}?${updatedParams.toString()}`);
+    setOpenSubmitFormModel(true);
     handleMenuClose();
   };
 
@@ -42,6 +60,9 @@ const TaskCard = ({ item }) => {
   };
 
   const handleOpenSubmissionList = () => {
+    const updatedParams = new URLSearchParams(location.search);
+    updatedParams.set("taskId", item.id);
+    navigate(`${location.pathname}?${updatedParams.toString()}`);
     setOpenSubmissionList(true);
     handleMenuClose();
   };
@@ -52,12 +73,23 @@ const TaskCard = ({ item }) => {
     setOpenUpdateTask(false);
   };
 
-  const handleOpenUpdateTaskModel = () => {
-    // const updatedParams = new URLSearchParams(location.search);
+  const handleRemoveParam = () => {
+    const updatedParams = new URLSearchParams(location.search);
+    updatedParams.delete("filter");
+    const queryString = updatedParams.toString();
+    const updatedPath = queryString
+      ? `${location.pathname}?${queryString}`
+      : location.pathname;
 
+    navigate(updatedPath);
+  };
+
+  const handleOpenUpdateTaskModel = () => {
     setOpenUpdateTask(true);
-    // updatedParams.set("taskId", item.id);
-    // navigate(`${location.pathname}?${updatedParams.toString()}`);
+    const updatedParams = new URLSearchParams(location.search);
+
+    updatedParams.set("taskId", item.id);
+    navigate(`${location.pathname}?${updatedParams.toString()}`);
     handleMenuClose();
   };
 
@@ -109,17 +141,19 @@ const TaskCard = ({ item }) => {
               "aria-labelledby": "basic-button",
             }}
           >
-            {role === "ADMIN" ? (
-              <>
+            {auth.user?.role === "ADMIN" ? (
+              <div>
                 <MenuItem onClick={handleOpenUserList}>Assigned User</MenuItem>
                 <MenuItem onClick={handleOpenSubmissionList}>
                   See Submission
                 </MenuItem>
                 <MenuItem onClick={handleOpenUpdateTaskModel}>Edit</MenuItem>
                 <MenuItem onClick={handleDeleteTask}>Delete</MenuItem>
-              </>
+              </div>
             ) : (
-              <></>
+              <div>
+                <MenuItem onClick={handleOpenSubmitFormModel}>Submit</MenuItem>
+              </div>
             )}
           </Menu>
         </div>
@@ -129,10 +163,10 @@ const TaskCard = ({ item }) => {
         open={openSubmissionList}
         handleClose={handleCloseSubmissionList}
       ></SubmissionList>
-      <EditTaskCard
-        item={item}
-        open={openUpdateTask}
-        handleClose={handleCloseUpdateTask}
+      <EditTaskCard open={openUpdateTask} handleClose={handleCloseUpdateTask} />
+      <SubmitTaskFormModel
+        open={openSubmitFormMoel}
+        handleClose={handleCloseSubmitFormModel}
       />
     </div>
   );

@@ -50,6 +50,8 @@ export default function CreateTask({ handleClose, open }) {
     "Spring Boot",
     "Node js",
     "Python",
+    "MySQL",
+    "MongoDB",
   ];
 
   const handleDeadlineChange = (date) => {

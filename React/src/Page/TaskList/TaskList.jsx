@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import TaskCard from "../Task/TaskCard/TaskCard";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchTasks } from "../../ReduxToolkit/TaskSlice";
+import { fetchTasks, fetchUsersTasks } from "../../ReduxToolkit/TaskSlice";
 import { useLocation } from "react-router-dom";
 
 const TaskList = () => {
@@ -14,16 +14,16 @@ const TaskList = () => {
     if (auth.user?.role === "ADMIN") {
       dispatch(fetchTasks({ status: filterValue }));
     } else {
-      dispatch(fetchTasks({ status: filterValue }));
+      dispatch(fetchUsersTasks({ status: filterValue }));
     }
   }, [filterValue]);
-  console.log("task : ", task);
+
   return (
     <div className="space-y-5 w-[67vw]">
       <div className="space-y-3">
-        {task.tasks.map((item) => (
-          <TaskCard key={item} item={item} />
-        ))}
+        {auth.user?.role === "ADMIN"
+          ? task.tasks.map((item) => <TaskCard key={item} item={item} />)
+          : task.usersTask.map((item) => <TaskCard key={item} item={item} />)}
       </div>
     </div>
   );

@@ -1,11 +1,11 @@
 import { Avatar } from "@mui/material";
 import "./Sidebar.css";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import CreateTask from "../Task/CreateTask";
 import "./Sidebar.css";
-import { useDispatch } from "react-redux";
-import { logout } from "../../ReduxToolkit/AuthSlice";
+import { useDispatch, useSelector } from "react-redux";
+import { getUserProfile, logout } from "../../ReduxToolkit/AuthSlice";
 
 const menu = [
   { name: "Home", value: "Home", role: ["ADMIN", "CUSTOMER"] },
@@ -15,12 +15,15 @@ const menu = [
   { name: "Create New Task", value: "Create New Task", role: ["ADMIN"] },
   { name: "Notification", value: "Notification", role: ["CUSTOMER"] },
 ];
-const role = "ADMIN";
 
 const Sidebar = () => {
   const dispatch = useDispatch();
   const location = useLocation();
   const navigate = useNavigate();
+  const { auth } = useSelector((store) => store);
+  useEffect(() => {
+    dispatch(getUserProfile(localStorage.getItem("jwt")));
+  }, []);
   const [activeMenu, setActiveMenu] = useState("Home");
   const handleMenuChange = (item) => {
     const updatedParams = new URLSearchParams(location.search);
@@ -67,7 +70,7 @@ const Sidebar = () => {
             />
           </div>
           {menu
-            .filter((item) => item.role.includes(role))
+            .filter((item) => item.role.includes(auth.user.role))
             .map((item) => (
               <p
                 onClick={() => handleMenuChange(item)}

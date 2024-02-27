@@ -3,6 +3,11 @@ import Box from "@mui/material/Box";
 
 import Modal from "@mui/material/Modal";
 import SubmissionCard from "./SubmissionCard";
+import { useDispatch, useSelector } from "react-redux";
+
+import { useLocation } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { fetchAllSubmissionsByTaskId } from "../../../ReduxToolkit/SubmissionSlice";
 
 const style = {
   position: "absolute",
@@ -16,9 +21,20 @@ const style = {
   p: 4,
 };
 
-const submission = [1, 1, 1, 1];
-
 export default function SubmissionList({ handleClose, open }) {
+  const dispatch = useDispatch();
+  const location = useLocation();
+  const queryParams = new URLSearchParams(location.search);
+  const taskId = queryParams.get("taskId");
+  const { submission } = useSelector((store) => store);
+
+  useEffect(() => {
+    console.log("taskId: ", taskId);
+    if (taskId) {
+      dispatch(fetchAllSubmissionsByTaskId(taskId));
+    }
+  }, [taskId]);
+
   return (
     <div>
       <Modal
@@ -29,10 +45,10 @@ export default function SubmissionList({ handleClose, open }) {
       >
         <Box sx={style}>
           <div className="">
-            {submission.length > 0 ? (
+            {submission.submissions.length > 0 ? (
               <div className="space-y-2">
-                {submission.map((item) => (
-                  <SubmissionCard key={item} />
+                {submission.submissions.map((item) => (
+                  <SubmissionCard key={item} item={item} />
                 ))}
               </div>
             ) : (
