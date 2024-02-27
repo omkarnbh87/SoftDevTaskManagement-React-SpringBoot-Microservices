@@ -4,18 +4,21 @@ import { useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import CreateTask from "../Task/CreateTask";
 import "./Sidebar.css";
+import { useDispatch } from "react-redux";
+import { logout } from "../../ReduxToolkit/AuthSlice";
 
 const menu = [
   { name: "Home", value: "Home", role: ["ADMIN", "CUSTOMER"] },
-  { name: "Done", value: "Done", role: ["ADMIN", "CUSTOMER"] },
-  { name: "Assigned", value: "Assigned", role: ["ADMIN"] },
-  { name: "Not Assigned", value: "Pending", role: ["ADMIN"] },
+  { name: "Done", value: "DONE", role: ["ADMIN", "CUSTOMER"] },
+  { name: "Assigned", value: "ASSIGNED", role: ["ADMIN"] },
+  { name: "Not Assigned", value: "PENDING", role: ["ADMIN"] },
   { name: "Create New Task", value: "Create New Task", role: ["ADMIN"] },
   { name: "Notification", value: "Notification", role: ["CUSTOMER"] },
 ];
 const role = "ADMIN";
 
 const Sidebar = () => {
+  const dispatch = useDispatch();
   const location = useLocation();
   const navigate = useNavigate();
   const [activeMenu, setActiveMenu] = useState("Home");
@@ -38,6 +41,7 @@ const Sidebar = () => {
   };
 
   const handleLogout = () => {
+    dispatch(logout());
     console.log("Logout clicked");
   };
 

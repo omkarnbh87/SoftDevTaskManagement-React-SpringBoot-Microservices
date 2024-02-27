@@ -13,6 +13,6 @@ import lombok.ToString;
 @ToString
 public class JwtResponse {
 
-	private String jwtToken;
+	private String jwt;
 	private String username;
 }

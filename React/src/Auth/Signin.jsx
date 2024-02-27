@@ -1,8 +1,11 @@
 /* eslint-disable react/prop-types */
 import { TextField } from "@mui/material";
 import { useState } from "react";
+import { useDispatch } from "react-redux";
+import { login } from "../ReduxToolkit/AuthSlice";
 
 const Signin = ({ togglePanel }) => {
+  const dispatch = useDispatch();
   const [formData, setFormData] = useState({
     email: "",
     password: "",
@@ -13,6 +16,7 @@ const Signin = ({ togglePanel }) => {
   };
   const handleSubmit = (e) => {
     e.preventDefault();
+    dispatch(login(formData));
     console.log("login form: ", formData);
   };
   return (

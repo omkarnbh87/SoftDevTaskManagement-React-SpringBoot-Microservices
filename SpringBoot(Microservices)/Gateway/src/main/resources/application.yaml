@@ -22,13 +22,23 @@ spring:
           predicates:
            - Path=/api/submission/**,/submission/**
        default-filters:
-        - DedupeResponseHeader=Access-Controll-Allow-Credentials Access-Control-Allow-Origins
+        - DedupeResponseHeader=Access-Control-Allow-Origin
+        - DedupeResponseHeader=Access-Control-Allow-Methods
+        - DedupeResponseHeader=Access-Control-Allow-Headers
        globalcors:
-        cors-configuration:
-         '[/**]':
-         allowedOrigins: "*"
-         allowedMethods: "*"
-         allowedHeaders: "*"
+        corsConfigurations:
+          '[/**]':
+            allowedOrigins:
+              - "*"
+            allowedMethods:
+              - GET
+              - POST
+              - PUT
+              - DELETE
+            allowedHeaders:
+              - "*"
+              - Authorization
+            maxAge: 3600
    
 
     

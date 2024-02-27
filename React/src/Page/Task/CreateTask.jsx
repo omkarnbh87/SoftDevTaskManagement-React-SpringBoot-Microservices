@@ -6,6 +6,8 @@ import { DateTimePicker } from "@mui/x-date-pickers/DateTimePicker";
 import Modal from "@mui/material/Modal";
 import { Autocomplete, Grid, TextField } from "@mui/material";
 import { useState } from "react";
+import { useDispatch } from "react-redux";
+import { createTask } from "../../ReduxToolkit/TaskSlice";
 
 const style = {
   position: "absolute",
@@ -20,6 +22,7 @@ const style = {
 };
 
 export default function CreateTask({ handleClose, open }) {
+  const dispatch = useDispatch();
   const [formData, setFormData] = useState({
     title: "",
     image: "",
@@ -83,6 +86,7 @@ export default function CreateTask({ handleClose, open }) {
     const { deadline } = formData;
     formData.deadline = formatDate(deadline);
     formData.tags = selectedTags;
+    dispatch(createTask(formData));
     console.log("Formdata: ", formData);
     console.log("deadline: ", formData.deadline);
     handleClose();

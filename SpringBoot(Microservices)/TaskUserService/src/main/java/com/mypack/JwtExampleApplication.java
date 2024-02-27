@@ -19,6 +19,9 @@ public class JwtExampleApplication implements CommandLineRunner {
 	public static void main(String[] args) {
 		SpringApplication.run(JwtExampleApplication.class, args);
 	}
+	
+	
+	
 
 	@Override
 	public void run(String... args) throws Exception {

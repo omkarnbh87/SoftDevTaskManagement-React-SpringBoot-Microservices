@@ -22,6 +22,7 @@ public class HomeController {
 	
 	@GetMapping("/user/profile")
 	public User getUserProfile(@RequestHeader("Authorization") String token) {
+		System.out.println("Get user profile");
 		return userService.getUser(token.substring(7));
 		
 	}

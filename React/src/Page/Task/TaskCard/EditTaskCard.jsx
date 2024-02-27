@@ -5,7 +5,9 @@ import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { DateTimePicker } from "@mui/x-date-pickers/DateTimePicker";
 import Modal from "@mui/material/Modal";
 import { Autocomplete, Grid, TextField } from "@mui/material";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { fetchTasksById, updateTask } from "../../../ReduxToolkit/TaskSlice";
 
 const style = {
   position: "absolute",
@@ -19,7 +21,9 @@ const style = {
   p: 4,
 };
 
-export default function EditTaskCard({ handleClose, open }) {
+export default function EditTaskCard({ item, handleClose, open }) {
+  const dispatch = useDispatch();
+  const { task } = useSelector((store) => store);
   const [formData, setFormData] = useState({
     title: "",
     image: "",
@@ -85,8 +89,18 @@ export default function EditTaskCard({ handleClose, open }) {
     formData.tags = selectedTags;
     console.log("Formdata: ", formData);
     console.log("deadline: ", formData.deadline);
+    dispatch(updateTask({ id: item.id, updatedTaskData: formData }));
     handleClose();
   };
+
+  useEffect(() => {
+    console.log("hello");
+    dispatch(fetchTasksById(item.id));
+  }, [item.id]);
+
+  useEffect(() => {
+    if (task.taskDetails) setFormData(task.taskDetails);
+  }, [task.taskDetails]);
 
   return (
     <div>
@@ -104,7 +118,7 @@ export default function EditTaskCard({ handleClose, open }) {
                   label="Title"
                   fullWidth
                   name="title"
-                  value={FormData.title}
+                  value={formData.title}
                   onChange={handleChange}
                 />
               </Grid>
@@ -113,7 +127,7 @@ export default function EditTaskCard({ handleClose, open }) {
                   label="Image"
                   fullWidth
                   name="image"
-                  value={FormData.image}
+                  value={formData.image}
                   onChange={handleChange}
                 />
               </Grid>
@@ -124,7 +138,7 @@ export default function EditTaskCard({ handleClose, open }) {
                   multiline
                   rows={4}
                   name="description"
-                  value={FormData.description}
+                  value={formData.description}
                   onChange={handleChange}
                 />
               </Grid>

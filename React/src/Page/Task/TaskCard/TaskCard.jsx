@@ -1,13 +1,20 @@
+/* eslint-disable react/prop-types */
 import MoreVertIcon from "@mui/icons-material/MoreVert";
 import { IconButton, Menu, MenuItem } from "@mui/material";
 import { useState } from "react";
 import UserList from "../UserList";
 import SubmissionList from "./SubmissionList";
 import EditTaskCard from "./EditTaskCard";
+import { useDispatch } from "react-redux";
+import { deleteTask } from "../../../ReduxToolkit/TaskSlice";
+import { useLocation, useNavigate } from "react-router-dom";
 
 const role = "ADMIN";
 
-const TaskCard = () => {
+const TaskCard = ({ item }) => {
+  const location = useLocation();
+  const navigate = useNavigate();
+  const dispath = useDispatch();
   const [anchorEl, setAnchorEl] = useState(null);
   const openMenu = Boolean(anchorEl);
   const handleMenuClick = (event) => {
@@ -46,11 +53,16 @@ const TaskCard = () => {
   };
 
   const handleOpenUpdateTaskModel = () => {
+    // const updatedParams = new URLSearchParams(location.search);
+
     setOpenUpdateTask(true);
+    // updatedParams.set("taskId", item.id);
+    // navigate(`${location.pathname}?${updatedParams.toString()}`);
     handleMenuClose();
   };
 
   const handleDeleteTask = () => {
+    dispath(deleteTask(item.id));
     handleMenuClose();
   };
 
@@ -61,20 +73,18 @@ const TaskCard = () => {
           <div className="">
             <img
               className="lg:w-[7rem] lg:h-[7rem] object-cover"
-              src="https://th.bing.com/th/id/R.7ed5eef1cb1c0faf0e06bd29f900e2ff?rik=5SPdYr3n5Lfuvw&riu=http%3a%2f%2fstatic4.businessinsider.com%2fimage%2f58fe49fb0ba0b8ea048b59e9-2400&ehk=eEn110aUTrq0hz%2bJ%2fBb1VuOewIbx42WnS1noEQ4JBIM%3d&risl=&pid=ImgRaw&r=0"
+              src={item.image}
             />
           </div>
           <div className="space-y-5 ">
             <div className="space-y-2">
-              <h1 className="font-bold text-lg">Car Rental Website</h1>
-              <p className="text-gray-500 text-sm">
-                Use latest frameworks and technology to make this website
-              </p>
+              <h1 className="font-bold text-lg">{item.title}</h1>
+              <p className="text-gray-500 text-sm">{item.description}</p>
             </div>
             <div className="flex flex-wrap gap-2 items-center">
-              {[1, 1, 1, 1].map(() => (
-                <span key={1} className="py-1 px-5 rounded-full techStack">
-                  Angular
+              {item.tags.map((item) => (
+                <span key={item} className="py-1 px-5 rounded-full techStack">
+                  {item}
                 </span>
               ))}
             </div>
@@ -119,7 +129,11 @@ const TaskCard = () => {
         open={openSubmissionList}
         handleClose={handleCloseSubmissionList}
       ></SubmissionList>
-      <EditTaskCard open={openUpdateTask} handleClose={handleCloseUpdateTask} />
+      <EditTaskCard
+        item={item}
+        open={openUpdateTask}
+        handleClose={handleCloseUpdateTask}
+      />
     </div>
   );
 };
